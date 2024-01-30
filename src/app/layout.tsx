@@ -1,10 +1,10 @@
-"use client"
-import { Meta, meta } from "@/components/Main/Meta";
-import { App } from "./App"
+import Meta from "@/components/Main/Meta";
+import App from "./App"
 
 import "@/lib/app.scss"
 import "@/lib/index.css"
 import 'bootstrap/dist/css/bootstrap.min.css';
+import metadata from "./metadata";
 
 export default function RootLayout({
   children,
@@ -12,7 +12,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang={meta.lang}>
+    <html lang={metadata.lang}>
 
       <Meta />
 

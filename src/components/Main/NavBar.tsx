@@ -15,11 +15,12 @@ export function NavBar() {
 
                 <Navbar.Collapse>
                     <Nav>
+                        {/* TODO: Add NavItem color by checking path */}
                         <NavItem>
-                            <NavLink href="#">Overview</NavLink>
+                            <NavLink href="/">Overview</NavLink>
                         </NavItem>
                         <NavItem>
-                            <NavLink href="#">Problems</NavLink>
+                            <NavLink href="/problem">Problems</NavLink>
                         </NavItem>
                         <NavItem>
                             <NavLink href="#">My Submissions</NavLink>
