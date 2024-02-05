@@ -30,7 +30,7 @@ function genTableElement(index: number, args: IProblemListItem) {
 }
 
 export default function Problem() {
-    const [ListData, setListData] = useState<IProblemListItem[]>([])
+    let ListData: IProblemListItem[] = []
     const [TableElement, setTableElement] = useState<JSX.Element[]>([])
 
     function TableContent() {
@@ -44,16 +44,26 @@ export default function Problem() {
     function getListData() {
         axios.get(genFullUrl(consts.path.Problem.List))
             .then((res) => {
-                setListData(res.data);
+                if (JSON.stringify(res.data) != JSON.stringify((ListData))) {
+                    console.log(JSON.stringify(res.data));
+                    console.log(JSON.stringify(ListData));
+                    ListData = res.data;
+                    
+                    setTableElement(ListData.map((item: IProblemListItem, index: number) => genTableElement(index, item)))
+                } else {
+                    console.log("no update");
+                }
             })
-        setInterval(getListData, 5000)
     }
 
-    // TODO: fix the bug that the update will run into a infinite loop
-    getListData();
     useEffect(() => {
-        setTableElement(ListData.map((value, index) => genTableElement(index, value)))
-    }, ListData)
+        const interval = setInterval(() => {
+            getListData();
+        }, 1000);
+
+        return () => clearInterval(interval);
+
+    }, [ListData])
 
     return (
         <Card>
