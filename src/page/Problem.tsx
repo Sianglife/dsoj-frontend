@@ -1,4 +1,5 @@
-import { Card, Table } from "react-bootstrap"
+import { Card, Table, Spinner } from "react-bootstrap"
+import { Link } from "react-router-dom"
 import axios from "axios"
 import { genFullUrl } from "@/constant"
 import consts from "@/constant"
@@ -6,8 +7,6 @@ import { IProblemListItem } from "@/interface/IProblem"
 import { useEffect, useState } from "react"
 
 function genTableElement(index: number, args: IProblemListItem) {
-    console.log(index);
-    console.log(args);
     return (
         <tr>
             <td className="pl-4" style={{ color: "var(--bs-gray-dark)" }}>
@@ -15,7 +14,7 @@ function genTableElement(index: number, args: IProblemListItem) {
             </td>
 
             <td>
-                <a href="#" style={{ fontSize: "1.25rem", textDecoration: "none", color: "rgb(0,0,0)", fontWeight: "bold" }}><span style={{ fontWeight: "normal !important" }}>{args.title}</span></a></td>
+                <Link to={args.id} style={{ fontSize: "1.25rem", textDecoration: "none", color: "rgb(0,0,0)", fontWeight: "bold" }}><span style={{ fontWeight: "normal !important" }}>{args.title}</span></Link></td>
             <td>
                 <span className="text-muted">{args.accessed / args.challenged}</span>
             </td>
@@ -36,7 +35,7 @@ export default function Problem() {
     function TableContent() {
         return (
             <tbody>
-                {TableElement}
+                {(TableElement.length != 0) ? TableElement : <Spinner animation="border" variant="primary" role="status"><span className="visually-hidden">Loading...</span></Spinner>}
             </tbody>
         )
     }
@@ -45,13 +44,13 @@ export default function Problem() {
         axios.get(genFullUrl(consts.path.Problem.List))
             .then((res) => {
                 if (JSON.stringify(res.data) != JSON.stringify((ListData))) {
-                    console.log(JSON.stringify(res.data));
-                    console.log(JSON.stringify(ListData));
+                    // console.log(JSON.stringify(res.data));
+                    // console.log(JSON.stringify(ListData));
                     ListData = res.data;
-                    
+
                     setTableElement(ListData.map((item: IProblemListItem, index: number) => genTableElement(index, item)))
                 } else {
-                    console.log("no update");
+                    // console.log("no update");
                 }
             })
     }
@@ -62,7 +61,6 @@ export default function Problem() {
         }, 1000);
 
         return () => clearInterval(interval);
-
     }, [ListData])
 
     return (

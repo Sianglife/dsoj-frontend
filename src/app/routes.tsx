@@ -1,5 +1,6 @@
-import { Home } from "@/page/Home";
+import Home from "@/page/Home";
 import Problem from "@/page/Problem";
+import Details from "@/page/Details";
 import { createBrowserRouter } from "react-router-dom";
  
 
@@ -12,6 +13,10 @@ const routes = [
     {
         path: "/problem",
         element: <Problem />
+    },
+    {
+        path: "/problem/:id",
+        element: <Details />
     }
 ]
 

@@ -25,6 +25,5 @@ const list = {
 export default list
 
 export function genFullUrl(path: string) {
-    // console.log(list.url.api + path)
     return list.url.api + path;
 }
